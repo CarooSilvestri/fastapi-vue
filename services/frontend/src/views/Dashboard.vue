@@ -1,41 +1,36 @@
 <template>
-  <div>
-    <section>
-      <h1>Add new note</h1>
-      <hr/><br/>
-
-      <form @submit.prevent="submit">
-        <div class="mb-3">
-          <label for="title" class="form-label">Title:</label>
-          <input type="text" name="title" v-model="form.title" class="form-control" />
-        </div>
-        <div class="mb-3">
-          <label for="content" class="form-label">Content:</label>
-          <textarea
-            name="content"
-            v-model="form.content"
-            class="form-control"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </section>
-
-    <br/><br/>
-
-    <section>
-      <h1>Notes</h1>
-      <hr/><br/>
-
-      <div v-if="notes.length">
+  <div v-if="notes.length " class="cont-ppal p-5 col-lg-10 col-sm-12 col-md-12">
+    <h1>Dashboard</h1>
+    <hr>
+    <div class="graphics row p-5">
+      <Graphs />
+    </div> 
+    
+    <section class="row mt-5 p-5">
+      <h1>Listado de resultados</h1>
+      <hr>
+      <br>
+      <div v-if="notes.length" class="d-flex flex-wrap justify-content-evenly">
         <div v-for="note in notes" :key="note.id" class="notes">
-          <div class="card" style="width: 18rem;">
+          
+          <div class="card alig-items-stretch m-1 p-3">
             <div class="card-body">
-              <ul>
-                <li><strong>Note Title:</strong> {{ note.title }}</li>
-                <li><strong>Author:</strong> {{ note.author.username }}</li>
-                <li><router-link :to="{name: 'Note', params:{id: note.id}}">View</router-link></li>
-              </ul>
+              <div class="d-flex flex-column mb-2">
+                <p class="patient m-0"><strong>Paciente</strong></p>
+                <h2>{{ note.title }}</h2>
+              </div>
+
+              <div class="d-flex flex-column mb-2">
+                <p class="patient m-0"><strong>Doctor</strong> </p>
+                <p>{{ note.author.username }}</p>
+              </div>
+              
+              <p class="patient m-0"><strong>Resultado</strong></p>
+              <div class="d-flex justify-content-between">
+                <p>{{ JSON.parse(note.content).selected }}</p>
+                <p class="gen"><strong>{{ JSON.parse(note.content).gen }}</strong></p>
+              </div>  
+              <router-link :to="{name: 'Note', params:{id: note.id}}"><button class="btn-viewmore mt-4">Ver más</button></router-link>
             </div>
           </div>
           <br/>
@@ -43,35 +38,56 @@
       </div>
 
       <div v-else>
-        <p>Nothing to see. Check back later.</p>
+        <p class="txt-big">Nothing to see. Check back later.</p>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
+import Graphs from '../components/Graphs.vue';
 export default {
+  components: { Graphs },
   name: 'Dashboard',
-  data() {
-    return {
-      form: {
-        title: '',
-        content: '',
-      },
-    };
-  },
-  created: function() {
-    return this.$store.dispatch('getNotes');
-  },
   computed: {
     ...mapGetters({ notes: 'stateNotes'}),
-  },
-  methods: {
-    ...mapActions(['createNote']),
-    async submit() {
-      await this.createNote(this.form);
-    },
+    
+    isLoggedIn: function() {
+      return this.$store.getters.isAuthenticated;
+    }
   },
 };
+
 </script>
+
+<style>
+.cont-ppal {
+
+  text-align: left;
+  height: 100%;
+}
+
+.card {
+  
+  width: 18rem;
+  margin: 1rem;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.patient {
+
+  color: grey;
+  font-size: 10pt;
+}
+
+.gen {
+
+  background-color: gainsboro;  
+  border-radius: 30px;
+  width: fit-content;
+  padding: 0.25em 1em 0.25em 1em;
+  font-size: 10pt;
+}
+</style>

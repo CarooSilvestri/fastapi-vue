@@ -1,23 +1,27 @@
 <template>
-  <section>
-    <h1>Edit note</h1>
-    <hr/><br/>
-
-    <form @submit.prevent="submit">
-      <div class="mb-3">
-        <label for="title" class="form-label">Title:</label>
-        <input type="text" name="title" v-model="form.title" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label for="content" class="form-label">Content:</label>
-        <textarea
-          name="content"
-          v-model="form.content"
-          class="form-control"
-        ></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+  <section class="col-10 col-sm-12 col-md-10 col-lg-10">
+    <div class="row justify-content-center h-100">
+      
+      <form @submit.prevent="submit" class="content col-10 col-sm-12 col-md-7 col-lg-4 p-5 align-self-center"> 
+        <h1>Edit note</h1>
+        <hr/><br/>
+        <div class="cont-form mb-4">
+          <label for="title" class="form-label">Paciente</label>
+          <input type="text" name="title" v-model="form.title" class="form-control" />
+        </div>
+        
+        <div class="cont-form mb-4">
+          <label for="content" class="form-label">Content:</label>
+          <textarea name="content" v-model="form.content" class="form-control"></textarea>
+        </div>
+        
+        <div class="cont-form mb-4">
+          <label for="content" class="form-label">Content:</label>
+          <textarea name="content" v-model="form.content" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn-viewmore mt-4">Editar</button>
     </form>
+    </div>
   </section>
 </template>
 
@@ -30,7 +34,7 @@ export default {
     return {
       form: {
         title: '',
-        content: '',
+        content: {selected: '', gen: ''},
       },
     };
   },

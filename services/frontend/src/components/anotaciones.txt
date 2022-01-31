@@ -1,0 +1,26 @@
+total: function() {
+      
+      return this.positives().length + this.negatives().length
+    },
+
+
+    porcentaje: function() {
+      return ((this.positives().length *100) / this.total()).toFixed(2)
+    },
+
+     methods: {
+    positives() {
+      return this.notes.filter(function(item) {
+          if (JSON.parse(item.content).selected == 'Positivo') {
+            return (JSON.parse(item.content).selected).lenght
+          }
+      })
+    },
+    negatives() {
+      return this.notes.filter(function(item) {
+          if (JSON.parse(item.content).selected == 'Negativo') {
+            return (JSON.parse(item.content).selected).lenght
+          }
+      })
+    },
+  },    

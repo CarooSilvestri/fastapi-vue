@@ -1,11 +1,23 @@
 <template>
-  <section>
-    <h1>Your Profile</h1>
-    <hr/><br/>
-    <div>
-      <p><strong>Full Name:</strong> <span>{{ user.full_name }}</span></p>
-      <p><strong>Username:</strong> <span>{{ user.username }}</span></p>
-      <p><button @click="deleteAccount()" class="btn btn-primary">Delete Account</button></p>
+  <section class="col-sm-12 col-md-10 col-lg-10">
+    <div class="row justify-content-center h-100">
+      <div class="content col-10 col-sm-12 col-md-7 col-lg-5 p-5 align-self-center">
+      
+        <h1>Tu perfil</h1>
+        <hr/><br/>
+          
+        <div class="d-flex align-content-center justify-content-between mb-4">
+          <h4><strong>Full Name</strong></h4>
+            <p><span>{{ user.full_name }}</span></p>
+          </div>
+            
+          <div class="d-flex align-content-center justify-content-between mb-4">
+            <h4><strong>Username</strong></h4>
+            <p><span>{{ user.username }}</span></p>
+          </div>
+            
+          <button @click="deleteAccount()" class="btn-viewmore">Delete Account</button>
+        </div>
     </div>
   </section>
 </template>
@@ -34,3 +46,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.cont-profile {
+
+  text-align: left;
+}
+</style>

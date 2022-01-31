@@ -1,22 +1,21 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-import store from '@/store';
+import Home from '../views/Home';
+import Dashboard from '../views/Dashboard';
+import EditNote from '../views/EditNote';
+import Login from '../views/Login';
+import Note from '../views/Note';
+import Profile from '../views/Profile';
+import Register from '../views/Register';
+import New from '../views/New';
 
-import Dashboard from '@/views/Dashboard';
-import EditNote from '@/views/EditNote';
-import Home from '@/views/Home.vue';
-import Login from '@/views/Login';
-import Note from '@/views/Note';
-import Profile from '@/views/Profile';
-import Register from '@/views/Register';
-
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: "Home",
+    name: 'Home',
     component: Home,
   },
   {
@@ -28,6 +27,13 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  // Para agregar nueva nota
+  {
+    path: '/new',
+    name: 'New',
+    component: New,
+    meta: {requiresAuth: true},
   },
   {
     path: '/dashboard',
@@ -49,30 +55,30 @@ const routes = [
     props: true,
   },
   {
-    path: '/editnote/:id',
+    path: '/note/:id',
     name: 'EditNote',
     component: EditNote,
     meta: {requiresAuth: true},
     props: true,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isAuthenticated) {
-      next();
-      return;
-    }
-    next('/login');
-  } else {
-    next();
-  }
-});
+  routes
+})
 
 export default router;
+
+
+  
+
